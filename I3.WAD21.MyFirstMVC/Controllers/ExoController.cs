@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DBSlideDataContext.DTO;
+using DBSlideDataContext.Services;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +10,16 @@ namespace I3.WAD21.MyFirstMVC.Controllers
 {
     public class ExoController : Controller
     {
+        private readonly IRepository<Student> service;
+
+        public ExoController(IRepository<Student> service)
+        {
+            this.service = service;
+        }
         public static string name { get; set; }
         public IActionResult Index()
         {
-            return View();
+            return Json(service.Get());
         }
         [Route("{id}/MultiplierPar2")]
         [Route("{id}/MultiplyPer2")]

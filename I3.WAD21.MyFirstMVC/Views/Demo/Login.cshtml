@@ -1,4 +1,25 @@
-﻿<form method="post">
+﻿@using Microsoft.AspNetCore.Mvc.ModelBinding 
+
+@if (!ViewContext.ModelState.IsValid) { 
+<div>
+    <span style="color:red">
+        Le formulaire contient @ViewContext.ModelState.ErrorCount erreur(s)
+    </span><br />
+    @foreach (KeyValuePair<string, ModelStateEntry> kvp in ViewContext.ModelState)
+    {
+        if (kvp.Value.Errors.Count() > 0)
+        {
+            foreach (ModelError modelError in kvp.Value.Errors)
+            {
+                <span style="color:red">
+                    @kvp.Key : @modelError.ErrorMessage 
+                </span><br />
+            }
+        }
+    }
+</div>
+}
+<form method="post">
     <div>
         <label for="Email">
             Email :

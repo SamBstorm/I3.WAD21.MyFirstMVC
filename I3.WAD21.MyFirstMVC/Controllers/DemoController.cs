@@ -2,6 +2,7 @@
 using DBSlideDataContext.Services;
 using I3.WAD21.MyFirstMVC.Handlers;
 using I3.WAD21.MyFirstMVC.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,26 @@ namespace I3.WAD21.MyFirstMVC.Controllers
         {
             StudentListItem stud = service.Get(id).ToListItem();
             return View(stud);
+        }
+
+        /// <summary>
+        /// Action affichant le formulaire, n'ayant pas de HttpVerb Attribute, la méthode par défaut est GET
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Login()
+        {
+            return View();
+        }
+        /// <summary>
+        /// Action récupérant le formulaire dans un IFormCollection, permet de travailler les donnée d'un formulaire.
+        /// ATTENTION : Signature doit être différente de l'affichage du formulaire, et être d'un HttpVerb différent, si l'affichage est en GET, la récupération est en POST (vérifier que la balise form contienne une méthode POST) : [HttpPost]
+        /// </summary>
+        /// <param name="formCollection"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult Login(IFormCollection formCollection)
+        {
+            return View();
         }
     }
 }

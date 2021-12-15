@@ -1,0 +1,11 @@
+﻿@using I3.WAD21.MyFirstMVC.Models
+@model DropDownModel
+<form method="post">
+    <select name="selected_option">
+        @foreach (int option in Model.options)
+        {
+            <option>@option</option>
+        }
+    </select>
+    <input type="submit" value="Enregistrer le nombre..."/>
+</form>

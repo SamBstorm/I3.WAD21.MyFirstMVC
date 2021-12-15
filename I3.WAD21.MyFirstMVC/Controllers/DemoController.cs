@@ -94,5 +94,19 @@ namespace I3.WAD21.MyFirstMVC.Controllers
         //        @"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\S+$).{8,20}$"))
         //        modelState.AddModelError(nameof(form.Passwd), "Le mot de passe n'est pas correct.");
         //}
+
+        public IActionResult DropDownList()
+        {
+            DropDownModel ddm = new DropDownModel();
+            ddm.options = new int[] { 1, 2, 3, 4, 5 };
+            return View(ddm);
+        }
+
+        [HttpPost]
+        public IActionResult DropDownList(DropDownModel form)
+        {
+            if (!ModelState.IsValid) return View();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

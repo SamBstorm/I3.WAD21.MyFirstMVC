@@ -6,7 +6,7 @@
 <div>
     @Html.ValidationSummary(true,
         "Le formulaire contient " + ViewContext.ModelState.ErrorCount + " erreur(s)",
-        new { @class = "text-danger", style = "border: 1px dashed red" }
+        new { htmlAttributes = new { @class = "text-danger", style = "border: 1px dashed red" } }
     )
 
     @*<span style="color:red">
@@ -26,10 +26,10 @@
         }*@
 </div>
 }
-@using (Html.BeginForm(actionName:"index",controllerName:"demo", method : FormMethod.Get)) { 
+@using (Html.BeginForm()) { 
     <div>
         @Html.LabelFor(m => m.Email)
-        @Html.EditorFor(m => m.Email, new { @class = "toto", style="border-radius:10px" })
+        @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", style = "border-radius:10px" } })
         @Html.ValidationMessageFor(m => m.Email, null, new { @class = "text-danger" })
         @*<label for="Email">
             Email :

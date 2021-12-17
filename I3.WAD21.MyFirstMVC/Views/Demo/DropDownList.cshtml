@@ -2,10 +2,19 @@
 @model DropDownModel
 <form method="post">
     <select name="selected_option">
+        <option>Selectionner un nombre</option>
         @foreach (int option in Model.options)
         {
-            <option>@option</option>
+            <option value="@option">@option</option>
         }
     </select>
+    @Html.DropDownListFor(
+        m => m.selected_option,
+        Model.options.Select(
+            o => new SelectListItem { Value = o.ToString(), Text = o.ToString()
+            }),
+        "Selectionner un nombre"
+        )
+
     <input type="submit" value="Enregistrer le nombre..."/>
 </form>

@@ -1,38 +1,51 @@
 ﻿@using Microsoft.AspNetCore.Mvc.ModelBinding 
 
+@model LoginForm
+
 @if (!ViewContext.ModelState.IsValid) { 
 <div>
-    <span style="color:red">
-        Le formulaire contient @ViewContext.ModelState.ErrorCount erreur(s)
-    </span><br />
-    @foreach (KeyValuePair<string, ModelStateEntry> kvp in ViewContext.ModelState)
-    {
-        if (kvp.Value.Errors.Count() > 0)
+    @Html.ValidationSummary(true,
+        "Le formulaire contient " + ViewContext.ModelState.ErrorCount + " erreur(s)",
+        new { @class = "text-danger", style = "border: 1px dashed red" }
+    )
+
+    @*<span style="color:red">
+            Le formulaire contient @ViewContext.ModelState.ErrorCount erreur(s)
+        </span><br />
+        @foreach (KeyValuePair<string, ModelStateEntry> kvp in ViewContext.ModelState)
         {
-            foreach (ModelError modelError in kvp.Value.Errors)
+            if (kvp.Value.Errors.Count() > 0)
             {
-                <span style="color:red">
-                    @kvp.Key : @modelError.ErrorMessage 
-                </span><br />
+                foreach (ModelError modelError in kvp.Value.Errors)
+                {
+                    <span style="color:red">
+                        @kvp.Key : @modelError.ErrorMessage
+                    </span><br />
+                }
             }
-        }
-    }
+        }*@
 </div>
 }
-<form method="post">
+@using (Html.BeginForm(actionName:"index",controllerName:"demo", method : FormMethod.Get)) { 
     <div>
-        <label for="Email">
+        @Html.LabelFor(m => m.Email)
+        @Html.EditorFor(m => m.Email, new { @class = "toto", style="border-radius:10px" })
+        @Html.ValidationMessageFor(m => m.Email, null, new { @class = "text-danger" })
+        @*<label for="Email">
             Email :
         </label>
-        <input type="email" name="Email" />
+        <input type="email" name="Email" />*@
     </div>
     <div>
-        <label for="Passwd">
+        @Html.LabelFor(m => m.Passwd)
+        @Html.EditorFor(m => m.Passwd)
+        @Html.ValidationMessageFor(m => m.Passwd, null, new { @class = "text-danger" })
+        @*<label for="Passwd">
             Password :
         </label>
-        <input type="password" name="Passwd" />
+        <input type="password" name="Passwd" />*@
     </div>
     <div>
         <input type="submit" value="Login" />
     </div>
-</form>
+}

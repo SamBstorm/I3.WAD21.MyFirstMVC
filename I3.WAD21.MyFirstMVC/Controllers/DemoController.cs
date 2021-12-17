@@ -29,9 +29,10 @@ namespace I3.WAD21.MyFirstMVC.Controllers
 
         public IActionResult Index()
         {
-            return View(this.Movies);
+            return View(service.Get().Select(s=> s.ToListItem()));
         }
 
+        [Route("Student/details/{id}")]
         public IActionResult Student(int id)
         {
             StudentListItem stud = service.Get(id).ToListItem();

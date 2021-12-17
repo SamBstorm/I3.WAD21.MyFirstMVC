@@ -1,10 +1,14 @@
 ﻿@using I3.WAD21.MyFirstMVC.Models
-@model IEnumerable<Movie>
+@model IEnumerable<StudentListItem>
 
-<select>
-    @foreach (Movie movie in Model)
+@{ 
+    string myBtn(string text) { return "<input type=\"button\" value=\""+text+"\" />"; }
+}
+
+<ul>
+    @foreach (StudentListItem student in Model)
     {
-        <option value="@movie.Id">@movie.Title@((movie.Subtitle is null)?"":" - "+movie.Subtitle)</option>
+        <li>@Html.ActionLink(@student.Nom, "Student","Demo",new { id = student.Id },new{ @class= "btn btn-primary"}) @Html.Raw(myBtn(student.Nom))</li>
 
     }
-</select>
+</ul>

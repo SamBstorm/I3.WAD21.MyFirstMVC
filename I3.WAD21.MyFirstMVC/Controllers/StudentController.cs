@@ -76,42 +76,63 @@ namespace I3.WAD21.MyFirstMVC.Controllers
         // GET: StudentController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            StudentEditForm model = this._service.Get(id).ToEditForm();
+            return View(model);
         }
 
         // POST: StudentController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, StudentEditForm collection)
         {
+            //Avant d'envoyer les nouvelles valeurs,
+            //comme notre formulaire ne contient pas toutes les données (Ex.: Login, BirthDate, ...)
+            //il nous faut recharger ces données dans une variable 
+            Student result = this._service.Get(id);
             try
             {
+                if (result is null) throw new Exception("Pas d'étudiant avec cet identifiant");
+                if (!(ModelState.IsValid)) throw new Exception();
+                //Les tests de validations étant correct, on mets à jour l'étudiant 'result' avant l'envois dans la DB
+                result.Course_ID = collection.Course;
+                result.Section_ID = collection.Section;
+                result.Year_Result = collection.YearResult;
+                this._service.Update(id, result);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception e)
             {
-                return View();
+                ViewBag.Error = e.Message;
+                if(result is null) return RedirectToAction(nameof(Index));
+                return View(result.ToEditForm());
             }
         }
 
         // GET: StudentController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            StudentDeleteForm model = this._service.Get(id).ToDeleteForm();
+            return View(model);
         }
 
         // POST: StudentController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, StudentDeleteForm collection)
         {
+            Student result = this._service.Get(id);
             try
             {
+                if (result is null) throw new Exception("Pas d'étudiant avec cet identifiant.");
+                if (!ModelState.IsValid) throw new Exception();
+                if (!collection.Validate) throw new Exception("Action non validée...");
+                this._service.Delete(id);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception e)
             {
-                return View();
+                ViewBag.Error = e.Message;
+                return RedirectToAction(nameof(Index));
             }
         }
     }

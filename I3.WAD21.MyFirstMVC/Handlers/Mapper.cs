@@ -37,5 +37,27 @@ namespace I3.WAD21.MyFirstMVC.Handlers
             };
         }
 
+        public static StudentEditForm ToEditForm(this Student student)
+        {
+            if (student is null) return null;
+            return new StudentEditForm { 
+                Nom = student.Last_Name,
+                Prenom = student.First_Name,
+                Section = student.Section_ID,
+                Course = student.Course_ID,
+                YearResult = student.Year_Result
+            };
+        }
+
+        public static StudentDeleteForm ToDeleteForm(this Student student)
+        {
+            if (student is null) return null;
+            return new StudentDeleteForm { 
+                Nom = student.Last_Name,
+                Prenom = student.First_Name,
+                Login = student.Login,
+                Validate = false
+            };
+        }
     }
 }

@@ -11,7 +11,8 @@ namespace I3.WAD21.MyFirstMVC.Models
     {
         [Required(ErrorMessage = "L'adresse email est obligatoire.")]
         [EmailAddress(ErrorMessage ="L'adresse n'est au bon format.")]
-        [DataType(DataType.EmailAddress)]
+        //[DataType(DataType.EmailAddress)]
+        //ATTENTION : à ne mettre que si l'attribut EmailAddress n'est pas défini
         [DisplayName("Adresse électronique : ")]
         public string Email { get; set; }
         [Required(ErrorMessage = "Le mot de passe est obligatoire.")]

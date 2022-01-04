@@ -21,5 +21,21 @@ namespace I3.WAD21.MyFirstMVC.Handlers
             };
         }
 
+        public static StudentDetails ToDetails(this Student student)
+        {
+            if (student is null) return null;
+            return new StudentDetails
+            {
+                Id = student.Student_ID,
+                Prenom = student.First_Name,
+                Nom = student.Last_Name,
+                Section = student.Section_ID,
+                Course = student.Course_ID,
+                Login = student.Login,
+                BirthDate = student.BirthDate,
+                YearResult = student.Year_Result
+            };
+        }
+
     }
 }

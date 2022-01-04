@@ -2,9 +2,12 @@
 <html>
 <head>
     <title>@ViewData["title"]</title>
+    @RenderSection("CSS", false)
 </head>
 <body>
     <h1>Le Layout démo</h1>
     @RenderBody()
+
+    @await RenderSectionAsync("Scripts", false)
 </body>
 </html>

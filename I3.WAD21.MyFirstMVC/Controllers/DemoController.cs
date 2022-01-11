@@ -16,15 +16,17 @@ namespace I3.WAD21.MyFirstMVC.Controllers
     public class DemoController : Controller
     {
         private readonly IRepository<Student> service;
+        private readonly SessionManager session;
 
         public List<Movie> Movies = new List<Movie>(new Movie[] {
         new Movie() { Id = 1 , Title = "Jurassic Park", Subtitle = null,  Minutes = 90, RealeaseDate = new DateTime(1993,6,21)},
             new Movie() { Id = 2, Title = "Matrix", Subtitle = null, Minutes = 90, RealeaseDate = new DateTime(1999, 6, 21) }, new Movie() { Id = 3, Title = "Matrix", Subtitle = "Reloaded", Minutes = 90, RealeaseDate = new DateTime(1993, 6, 21) }
         });
 
-        public DemoController(IRepository<Student> service)
+        public DemoController(IRepository<Student> service, SessionManager session)
         {
             this.service = service;
+            this.session = session;
         }
 
         public IActionResult Index()
@@ -45,6 +47,7 @@ namespace I3.WAD21.MyFirstMVC.Controllers
         /// <returns></returns>
         public IActionResult Login()
         {
+            if (session.IsConnected) return RedirectToAction("Index","Home");
             return View();
         }
         ///// <summary>
@@ -81,6 +84,7 @@ namespace I3.WAD21.MyFirstMVC.Controllers
         {
             //ValidateLoginForm(form, ModelState);
             if(!ModelState.IsValid) return View();
+            session.SetUser(form);
             return RedirectToAction("Index", "Home");
         }
 
@@ -108,6 +112,26 @@ namespace I3.WAD21.MyFirstMVC.Controllers
         {
             if (!ModelState.IsValid) return View();
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult Session()
+        {
+            this.session.MonTableauDeByte = new byte[0];
+            this.session.ValeurText = "toto";
+            this.session.ValeurInt = 42;
+            return View();
+        }
+
+        public IActionResult SessionMovies()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult SessionMovies(Movie collection)
+        {
+            if(collection is null) return View();
+            session.AddMovie(collection);
+            return View();
         }
     }
 }

@@ -1,5 +1,6 @@
 using DBSlideDataContext.DTO;
 using DBSlideDataContext.Services;
+using I3.WAD21.MyFirstMVC.Handlers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,6 +25,22 @@ namespace I3.WAD21.MyFirstMVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+            services.AddSession(options => {
+                options.Cookie.Name = "DemoMVC";
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+                options.IdleTimeout = TimeSpan.FromMinutes(1);
+            });
+
+            services.Configure<CookiePolicyOptions>(options => {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
+            });
+
+            services.AddHttpContextAccessor();
+            services.AddScoped<SessionManager>();
+
             services.AddScoped<IRepository<Student>, StudentService>();
             services.AddControllersWithViews();
 
@@ -40,6 +57,9 @@ namespace I3.WAD21.MyFirstMVC
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            app.UseSession();
+            app.UseCookiePolicy();
+
             app.UseStaticFiles();
 
             app.UseRouting();

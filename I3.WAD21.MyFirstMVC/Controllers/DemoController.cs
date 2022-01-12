@@ -137,5 +137,18 @@ namespace I3.WAD21.MyFirstMVC.Controllers
             session.AddMovie(collection);
             return View();
         }
+
+        public IActionResult LogOut()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login");
+        }
+
+        public IActionResult PartiallyLogOut()
+        {
+            //HttpContext.Session.Remove("user");
+            session.ForgetUser();
+            return RedirectToAction("Login");
+        }
     }
 }

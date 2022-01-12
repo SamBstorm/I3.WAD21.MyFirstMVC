@@ -38,6 +38,12 @@ namespace I3.WAD21.MyFirstMVC
                 options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
             });
 
+            services.AddDistributedSqlServerCache(options => {
+                options.ConnectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=MyFirstMVCSession;Integrated Security=True";
+                options.SchemaName = "dbo";
+                options.TableName = "SessionCache";
+            });
+
             services.AddHttpContextAccessor();
             services.AddScoped<SessionManager>();
 

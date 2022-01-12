@@ -70,5 +70,10 @@ namespace I3.WAD21.MyFirstMVC.Handlers
         {
             _session.SetString("user", form.Email);
         }
+
+        public void ForgetUser()
+        {
+            _session.Remove("user");
+        }
     }
 }

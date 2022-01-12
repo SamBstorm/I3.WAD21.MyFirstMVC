@@ -116,6 +116,10 @@ namespace I3.WAD21.MyFirstMVC.Controllers
 
         public IActionResult Session()
         {
+            /** //Utilisation non recommandée, utiliser plutot le SessionManager
+            string key1 = "MonTableauDeBytes";
+            ViewBag.KeyOne = key1;
+            HttpContext.Session.Set(key1, new byte[0]);*/
             this.session.MonTableauDeByte = new byte[0];
             this.session.ValeurText = "toto";
             this.session.ValeurInt = 42;

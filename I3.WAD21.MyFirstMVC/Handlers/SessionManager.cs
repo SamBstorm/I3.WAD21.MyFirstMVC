@@ -18,30 +18,30 @@ namespace I3.WAD21.MyFirstMVC.Handlers
 
         public int? ValeurInt {
             get {
-                return _session.GetInt32("ValeurInt");
+                return _session.GetInt32(nameof(ValeurInt));
             }
             set {
-                _session.SetInt32("ValeurInt", value.Value);
+                _session.SetInt32(nameof(ValeurInt), value.Value);
             } 
         }
 
         public string ValeurText
         {
             get {
-                return _session.GetString("ValeurText");
+                return _session.GetString(nameof(ValeurText));
             }
             set {
-                _session.SetString("ValeurText", value);
+                _session.SetString(nameof(ValeurText), value);
             }
         }
 
         public byte[] MonTableauDeByte
         {
             get {
-                return _session.Get("MonTableauDeByte");
+                return _session.Get(nameof(MonTableauDeByte));
             }
             set {
-                _session.Set("MonTableauDeByte", value);
+                _session.Set(nameof(MonTableauDeByte), value);
             }
         }
 

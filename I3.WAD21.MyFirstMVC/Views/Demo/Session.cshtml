@@ -1,6 +1,14 @@
 ﻿@using I3.WAD21.MyFirstMVC.Handlers
 @inject SessionManager sessionManager
 
+@* <!--Utilisation non recommandée, utiliser plutot le SessionManager-->
+    
+@using Microsoft.AspNetCore.Http;
+@{ 
+    string key1 = ViewBag.KeyOne;
+}
+<p>@ViewContext.HttpContext.Session.Get(key1).Length</p>*@
+
 <h1>Session démonstration</h1>
 
 <p>@sessionManager.MonTableauDeByte.Length</p>
